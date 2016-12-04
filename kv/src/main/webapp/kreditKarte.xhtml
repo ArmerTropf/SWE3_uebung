@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+<link rel="stylesheet" href="resources/alleKunden.css" type="text/css" />
+<title>
+<ui:insert name="title">Kreditkarte</ui:insert>
+</title>
+</h:head>
+<h:body>
+<div id="header">
+<ui:insert name="header">
+</ui:insert>
+</div>
+<div id="content">
+	<ui:insert name="content">
+	
+		<h:form>
+			<h:panelGrid var="kreditkarte" value="#{kundenHandler.merkeKreditkarte}" columns="2" headerClass="header" footerClass="footer">
+			
+				<h:outputLabel value="Kunde:" for="kunde" />
+				<h:panelGroup>
+					<h:outputLabel  id="kunde" value="#{kundenHandler.merkeKunde.vorname} #{kundenHandler.merkeKunde.nachname}"/> 	
+				</h:panelGroup>
+			
+				<h:outputLabel value="Karte:" for="karte" />
+				<h:panelGroup>
+					<h:selectOneMenu id="karte" value="#{kundenHandler.merkeKreditkarte.typ}">
+						<f:selectItems var="karte" value="#{kundenHandler.kreditkarteValues}" itemValue="#{karte}" itemLabel="#{karte.karte}" />
+					</h:selectOneMenu>
+				</h:panelGroup>
+				
+				<h:outputLabel value="Kreditkartennummer:" for="kreditkartennummer" />
+				<h:panelGroup>
+					<h:inputText required="true" requiredMessage="Eingabe fehlt" id="kreditkartennummer" value="#{kundenHandler.merkeKreditkarte.nummer}">
+						<f:converter converterId="kreditkartenConverter" />
+						<f:validator validatorId="kreditkartenValidator" />						
+					</h:inputText>
+					<h:message for="kreditkartennummer" styleClass="message" />
+				</h:panelGroup>
+				
+				<h:outputLabel value="GültigBis:" for="gueltigBis" />
+				<h:panelGroup>
+					<h:inputText required="false" requiredMessage="Eingabe fehlt" id="gueltigBis" value="#{kundenHandler.merkeKreditkarte.gueltigBis}">
+						<f:convertDateTime pattern="dd.MM.yyyy"/> 
+					</h:inputText>
+					<h:message for="gueltigBis" styleClass="message" />
+				</h:panelGroup>
+				
+				<h:outputLabel value="Inhaber:" for="inhaber" />
+				<h:panelGroup>
+					<h:inputText required="false" requiredMessage="Eingabe fehlt" id="inhaber" value="#{kundenHandler.merkeKreditkarte.inhaber}">						
+					</h:inputText>				
+					<h:message for="inhaber" styleClass="message" />
+				</h:panelGroup>
+				
+			</h:panelGrid>
+				<h:commandButton action="#{kundenHandler.kreditkarteSpeichern()}" value="Speichern" />
+				<h:commandButton action="#{kundenHandler.abbrechen()}" immediate="true" value="Abbrechen" />
+		</h:form>
+	
+	</ui:insert>
+</div>
+<div id="footer">
+<ui:insert name="footer">
+</ui:insert>
+</div>
+</h:body>
+</html>
