@@ -42,7 +42,7 @@ xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 				<h:column>
 					<f:facet name="header">Zahldaten</f:facet>
 					<h:form>	
-						<h:commandButton action="#{kundenHandler.editKreditkarte()}" value="Zahldatenssss" />
+						<h:commandButton action="#{kundenHandler.editKreditkarte()}" value="Zahldaten" />
 					</h:form>
 				</h:column>
 				<h:column>
@@ -51,11 +51,16 @@ xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 						<h:commandButton action="#{kundenHandler.delete()}" value="Löschen" />
 					</h:form>
 				</h:column>
-				<h:column>
-					
+				<h:column>	
 					<f:facet name="header">Bearbeiten</f:facet>	
 					<h:form>
 						<h:commandButton action="#{kundenHandler.edit()}" value="Bearbeiten" />
+					</h:form>
+				</h:column>
+				<h:column>	
+					<f:facet name="header">Anschrift</f:facet>	
+					<h:form>
+						<h:commandButton action="#{kundenHandler.editAnschrift()}" value="Anschrift bearbeiten" />
 					</h:form>
 				</h:column>
 			
