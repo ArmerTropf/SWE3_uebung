@@ -41,6 +41,9 @@ public class Kunde implements Serializable
 	@OneToOne(cascade = CascadeType.ALL)	
 	private Kreditkarte kreditKarte;
 	
+	@OneToOne(cascade = CascadeType.ALL)	
+	private Anschrift anschrift;
+	
 	public Anrede getAnrede() {
 		return anrede;
 	}
@@ -53,9 +56,10 @@ public class Kunde implements Serializable
 	{
 		super();
 		this.kreditKarte = new Kreditkarte();
+		this.anschrift = new Anschrift();
 	}
 
-	public Kunde(Anrede anrede, String vorname, String nachname, Date geburtsdatum, Kreditkarte karte) 
+	public Kunde(Anrede anrede, String vorname, String nachname, Date geburtsdatum, Kreditkarte karte, Anschrift anschrift) 
 	{
 		super();
 		this.vorname = vorname;
@@ -63,12 +67,16 @@ public class Kunde implements Serializable
 		this.geburtsdatum = geburtsdatum;
 		this.anrede = anrede;
 		this.kreditKarte = karte;
+		this.anschrift = anschrift;
+		
 		
 		
 		
 	}
 	
 	
+	
+
 	public String getVorname() {
 		return vorname;
 	}
@@ -107,6 +115,14 @@ public class Kunde implements Serializable
 		return Kreditkartentyp.values();
 	}
 	
+	
+	public Anschrift getAnschrift() {
+		return anschrift;
+	}
+
+	public void setAnschrift(Anschrift anschrift) {
+		this.anschrift = anschrift;
+	}
 	
 
 

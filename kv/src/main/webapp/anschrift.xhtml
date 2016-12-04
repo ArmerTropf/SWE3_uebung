@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      > 
+
+<h:head>
+	<link rel="stylesheet" href="resources/alleKunden.css" type="text/css" />
+	<title>
+		<ui:insert name="title">Anschrift aendern/bearbeiten</ui:insert>
+	</title>
+</h:head>
+<h:body>
+	<div id="header">
+		<ui:insert name="header"></ui:insert>
+	</div>
+	<div id="content">
+		<ui:insert name="content">
+			<p:tooltip />
+			<h:form>
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			
+				<h:panelGrid var="anschrift" value="#{kundenHandler.merkeAnschrift}" columns="2" headerClass="header" footerClass="footer">
+					
+				<p:panelGrid style="margin-top:20px">
+    				<f:facet name="header">
+        				<p:row>
+       						<p:column colspan="7">Anschrift anlege/bearbeiten</p:column>
+       					</p:row>
+       				</f:facet>
+       				
+       					<p:row>
+        					<p:column>Name:</p:column>
+       						<p:column><h:outputLabel  id="kunde" value="#{kundenHandler.merkeKunde.vorname} #{kundenHandler.merkeKunde.nachname}"/></p:column>
+    					</p:row>
+    					<p:row>
+        					<p:column>Strasse:</p:column>
+       						<p:column>
+       							<p:inputText id="anschift_strasse" value="#{kundenHandler.merkeAnschrift.strasse}" required="true" requiredMessage="Adresse erforderlich"/>
+       							<p:message for="anschift_strasse" display="tooltip"/>
+       						</p:column>
+       						
+    					</p:row>
+    					<p:row>
+        					<p:column>Postleitzahl:</p:column>
+       						<p:column>
+       							<p:inputText id="anschift_plz" value="#{kundenHandler.merkeAnschrift.plz}" required="true" requiredMessage="Falscheingabe der PLZ">
+       								<f:validateRegex pattern="^([A-Z]-)?[0-9]{5}$"  />
+       							</p:inputText> 
+       							 <p:message for="anschift_plz" display="tooltip"/>
+    						</p:column>
+    					</p:row>
+    					<p:row>
+        					<p:column>Ort:</p:column>
+       						<p:column>
+       							<p:inputText id="anschift_ort" value="#{kundenHandler.merkeAnschrift.ort}" requiredMessage="Ort erforderlich"/>
+       							<p:message for="anschift_ort" display="tooltip"/>
+       						</p:column>
+    					</p:row>
+       				
+       				
+       			</p:panelGrid>
+     					
+				</h:panelGrid>
+					<p:commandButton action="#{kundenHandler.anschriftSpeichern()}" value="Speichern" icon="ui-icon-check"></p:commandButton> 
+					<p:button outcome="#{kundenHandler.abbrechen()}" value="Abbrechen" icon="ui-icon-cancel"/>
+			</h:form>
+		
+		</ui:insert>
+	</div>
+<div id="footer">
+<ui:insert name="footer">
+</ui:insert>
+</div>
+</h:body>
+</html>

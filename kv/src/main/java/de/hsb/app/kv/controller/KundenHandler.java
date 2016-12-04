@@ -41,6 +41,8 @@ public class KundenHandler
 		this.karten = karten;
 	}
 
+	
+	//Kunde
 	private Kunde merkeKunde = new Kunde();
 	public Kunde getMerkeKunde() {
 		return merkeKunde;
@@ -50,13 +52,24 @@ public class KundenHandler
 		this.merkeKunde = merkeKunde;
 	}
 	
-	private Kreditkarte merkeKreditkarte;
+	//Kreditkarte
+	private Kreditkarte merkeKreditkarte = new Kreditkarte();
 	public Kreditkarte getMerkeKreditkarte() {
-		return merkeKreditkarte;
+		return getMerkeKreditkarte();
 	}
 
 	public void setMerkeKreditkarte(Kreditkarte merkeKreditkarte) {
 		this.merkeKreditkarte = merkeKreditkarte;
+	}
+
+	//Anschrift	
+	private Anschrift merkeAnschrift = new Anschrift();
+	public Anschrift getMerkeAnschrift() {
+		return merkeAnschrift;
+	}
+
+	public void setMerkeAnschrift(Anschrift merkeAnschrift) {
+		this.merkeAnschrift = merkeAnschrift;
 	}
 
 	@PersistenceContext
@@ -89,11 +102,11 @@ public class KundenHandler
 			e.printStackTrace();
 		}
 //		em.persist(new Kunde(Anrede.HERR, "Hugo", "Hermann", new GregorianCalendar(2014,05,01).getTime(),new Kreditkarte(Kreditkartentyp.MASTER,"1234",new GregorianCalendar(2014,05,01).getTime(),"Ich")));				// ergaenzen Sie die anderen Kunden ...em.persist(new Kunde("Hugo", "Hermann", new GregorianCalendar(2014,05,01).getTime()));				// ergaenzen Sie die anderen Kunden ...
-		em.persist(new Kunde(Anrede.HERR, "Hugo", "Hermann", new GregorianCalendar(2014,05,01).getTime(),new Kreditkarte()));				// ergaenzen Sie die anderen Kunden ...em.persist(new Kunde("Hugo", "Hermann", new GregorianCalendar(2014,05,01).getTime()));				// ergaenzen Sie die anderen Kunden ...	
-		em.persist(new Kunde(Anrede.HERR,"Willi", "Meier", new GregorianCalendar(1960, 2, 2).getTime(),new Kreditkarte()));
-		em.persist(new Kunde(Anrede.HERR,"Alan", "Turing", new GregorianCalendar(1912, 6, 23).getTime(),new Kreditkarte()));
-		em.persist(new Kunde(Anrede.HERR,"Donald", "Knuth", new GregorianCalendar(1938, 01, 10).getTime(),new Kreditkarte()));
-		em.persist(new Kunde(Anrede.HERR,"Edsger W.", "Dijkstra", new GregorianCalendar(1930, 5, 11).getTime(),new Kreditkarte()));
+		em.persist(new Kunde(Anrede.HERR, "Hugo", "Hermann", new GregorianCalendar(2014,05,01).getTime(),new Kreditkarte(), new Anschrift()));				// ergaenzen Sie die anderen Kunden ...em.persist(new Kunde("Hugo", "Hermann", new GregorianCalendar(2014,05,01).getTime()));				// ergaenzen Sie die anderen Kunden ...	
+		em.persist(new Kunde(Anrede.HERR,"Willi", "Meier", new GregorianCalendar(1960, 2, 2).getTime(),new Kreditkarte(), new Anschrift()));
+		em.persist(new Kunde(Anrede.HERR,"Alan", "Turing", new GregorianCalendar(1912, 6, 23).getTime(),new Kreditkarte(), new Anschrift()));
+		em.persist(new Kunde(Anrede.HERR,"Donald", "Knuth", new GregorianCalendar(1938, 01, 10).getTime(),new Kreditkarte(), new Anschrift()));
+		em.persist(new Kunde(Anrede.HERR,"Edsger W.", "Dijkstra", new GregorianCalendar(1930, 5, 11).getTime(),new Kreditkarte(), new Anschrift()));
 		
 		kunden = new ListDataModel<Kunde>();
 		kunden.setWrappedData(em.createNamedQuery("SelectKunden").getResultList());
@@ -240,12 +253,7 @@ public class KundenHandler
 		return Kreditkartentyp.values();
 	}
 	
-	public String abbrechen()
-	{
-		System.out.println("Abbrechen");
-		return "alleKunden";
-	}
-	
+
 	public String kreditkarteSpeichern() 
 	{
 		merkeKunde.setKreditkarte(merkeKreditkarte);
@@ -290,6 +298,62 @@ public class KundenHandler
 			e.printStackTrace();
 		}
 		System.out.println("Speichern");
+		return "alleKunden";
+	}
+	
+	public String editAnschrift()
+	{
+			merkeKunde = kunden.getRowData();
+			merkeAnschrift = merkeKunde.getAnschrift();
+			return "anschrift";
+	}
+	
+	
+	public String anschriftSpeichern() 
+	{
+		merkeKunde.setAnschrift(merkeAnschrift);
+		try {
+			utx.begin();
+		} catch (NotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		merkeAnschrift = em.merge(merkeAnschrift);
+		em.persist(merkeAnschrift);
+
+		
+		try {
+			utx.commit();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RollbackException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (HeuristicMixedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (HeuristicRollbackException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Speichern Anschrift");
+		return "alleKunden";
+	}
+	
+	public String abbrechen()
+	{
+		System.out.println("Abbrechen");
 		return "alleKunden";
 	}
 }
