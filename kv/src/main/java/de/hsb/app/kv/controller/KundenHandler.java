@@ -55,7 +55,7 @@ public class KundenHandler
 	//Kreditkarte
 	private Kreditkarte merkeKreditkarte = new Kreditkarte();
 	public Kreditkarte getMerkeKreditkarte() {
-		return getMerkeKreditkarte();
+		return getMerkeKreditkarte;
 	}
 
 	public void setMerkeKreditkarte(Kreditkarte merkeKreditkarte) {
